@@ -56,6 +56,89 @@ export default App
 
 ---
 
+## TypeScript Support
+
+This SDK includes TypeScript type definitions. You can import types for better IDE support and type safety:
+
+### Using with TypeScript
+
+```typescript
+import React, { useRef } from 'react'
+import { View, TouchableOpacity, Text } from 'react-native'
+import LinkSDK, { LinkSDKMethods } from 'lean-react-native'
+
+const App = () => {
+    // Use LinkSDKMethods type for the ref
+    const Lean = useRef<LinkSDKMethods>(null)
+
+    return (
+        <View>
+            <TouchableOpacity 
+                onPress={() => Lean.current?.link({
+                    customer_id: "CUSTOMER_ID",
+                    permissions: ["identity", "accounts", "balance", "transactions"]
+                })}
+            >
+                <Text>Link Account</Text>
+            </TouchableOpacity>
+
+            <LinkSDK
+                ref={Lean}
+                appToken="MY_APP_TOKEN"
+                version="latest"
+                country="ae"
+                sandbox
+                callback={(data) => {
+                    console.log('Callback data:', data)
+                }}
+            />
+        </View>
+    )
+}
+
+export default App
+```
+
+### Using the Lean Class Directly
+
+You can also import and use the `Lean` class directly for generating initialization URLs:
+
+```typescript
+import Lean from 'lean-react-native/src/components/LinkSDK/Lean'
+
+const lean = new Lean({
+  appToken: 'YOUR_APP_TOKEN',
+  env: 'production',
+  country: 'ae',
+  language: 'en',
+  isSandbox: false,
+  version: 'latest',
+})
+
+const linkUrl = lean.link({
+  customer_id: 'CUSTOMER_ID',
+  permissions: ['identity', 'accounts', 'balance'],
+})
+
+console.log('Initialization URL:', linkUrl)
+```
+
+### Available Type Exports
+
+```typescript
+import {
+  LinkSDKMethods,      // Methods available via ref
+  LinkSDKProps,        // Props for LinkSDK component
+  LeanCustomization,   // Customization options
+  LinkParams,          // Parameters for link method
+  ConnectParams,       // Parameters for connect method
+  ReconnectParams,     // Parameters for reconnect method
+  // ... and more
+} from 'lean-react-native'
+```
+
+---
+
 ## API Reference
 
 | Prop               | Required | Description                                                                                                    |

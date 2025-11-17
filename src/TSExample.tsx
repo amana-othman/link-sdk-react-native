@@ -11,21 +11,11 @@ import {
   View,
 } from 'react-native';
 
-import LinkSDK from './components/LinkSDK';
-
-interface LeanMethods {
-  link: (p: object) => void;
-  connect: (p: object) => void;
-  reconnect: (p: object) => void;
-  createPaymentSource: (p: object) => void;
-  updatePaymentSource: (p: object) => void;
-  pay: (p: object) => void;
-  authorizeConsent: (p: object) => void;
-}
+import LinkSDK, {LinkSDKMethods} from './components/LinkSDK';
 
 const App = () => {
   // Create a ref so we can use the SDK component
-  const Lean = useRef<LeanMethods>();
+  const Lean = useRef<LinkSDKMethods>(null);
 
   const [appToken, updateAppToken] = useState('');
   // Link
